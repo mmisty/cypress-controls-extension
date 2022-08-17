@@ -1,0 +1,25 @@
+{
+  "name": "cypress-cotrols-extension",
+  "version": "0.1.0",
+  "main": "./dist/index",
+  "types": "./dist/index.d.ts",
+  "repository": "git@github.com:mmisty/cypress-cotrols-extension.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
+  "scripts": {
+    "fmt": "pretty-quick",
+    "tsc": "tsc",
+    "cy:open": "$(npm bin)/cypress open",
+    "cy:run": "$(npm bin)/cypress run"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6",
+    "typescript": "^4.7.4",
+    "prettier": "~2.0.5",
+    "pretty-quick": "^3.0.0",
+    "tslib": "^2.0.1",
+    "tsutils": "~3.17.0"
+  }
+}

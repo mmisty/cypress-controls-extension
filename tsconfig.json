@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "baseUrl": "./dist",
+    "target": "es2015",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["cypress"]
+  },
+  "include": ["src"],
+  "exclude": ["cypress"]
+}
