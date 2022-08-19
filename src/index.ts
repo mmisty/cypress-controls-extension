@@ -1,3 +1,4 @@
+
 export type SetupControlSettings = {
   /**
    * Whether to add control for mode
@@ -14,9 +15,14 @@ export type SetupControlSettings = {
    * HTML for injected control
    */
   control: () => string;
-  // todo
-  // style: () => void,
-  // styleHandler: () => void,
+  /**
+   * css for controls
+   */
+   style: (parentId: string) => string,
+  
+  /**
+   * event listener
+   */
   addEventListener: (
     listener: (selector: string, event: string, handler: () => void) => void,
     cyStop: () => void,
@@ -24,9 +30,55 @@ export type SetupControlSettings = {
   ) => void;
 };
 
-export const injectControl = (settings: SetupControlSettings) => {
-  const cypressInteractive = Cypress.config('isInteractive');
+const cypressAppSelect = (selector: string) => cy.$$(selector, top?.document);
+const cyStopClick = () => cypressAppSelect('.stop').trigger('click');
+const cyRestartClick = () => cypressAppSelect('.restart').trigger('click');
 
+const setStyle = (wrapperId:string, styleDef:string) => {
+  const startLine = `/* cypress controls extension ${wrapperId}*/`;
+  const endLine = `/* cypress controls extension end ${wrapperId}*/`;
+  
+  // add style tag if no
+  if(cypressAppSelect('html head style').length === -1 ) {
+    cypressAppSelect('html head').append(`<style type="text/css">
+        ${startLine}
+        ${endLine}
+        </style>`);
+  }
+  
+  const wrapperStyleCss = `
+     #${wrapperId}  {
+        padding: 5px;
+        padding-top:5px;
+        ${styleDef}
+     }`
+  
+  const style = cypressAppSelect('html head style');
+  const html = style.html();
+  // add style first time for session
+  if(html.indexOf(startLine) === -1){
+    style.append(`
+         ${startLine}
+         ${wrapperStyleCss}
+         ${endLine}
+         `)
+  } else {
+    // change style
+    const start = html.indexOf(startLine);
+    const end = html.indexOf(endLine + endLine.length);
+    
+    const toReplace = html.slice(start, end);
+    
+    if(style.get()?.[0]){
+      style.get()[0].innerHTML = html.replace(toReplace, wrapperStyleCss)
+    }
+  }
+};
+
+export const injectControl = (settings: SetupControlSettings) => {
+  console.log('INJECT --' + settings.id)
+  const cypressInteractive = Cypress.config('isInteractive');
+  
   if (
     (!settings.mode.open && cypressInteractive) ||
     (!settings.mode.run && !cypressInteractive)
@@ -34,43 +86,40 @@ export const injectControl = (settings: SetupControlSettings) => {
     // do not add according to config nodes
     return;
   }
-  const cypressAppSelect = (selector: string) => cy.$$(selector, top?.document);
-  const cyStopClick = () => cypressAppSelect('.stop').trigger('click');
-  const cyRestartClick = () => cypressAppSelect('.restart').trigger('click');
-
-  const control = `<span id="controlWrapper-${
-    settings.id
-  }" style="padding: 5px;padding-top:13px;">
-        ${settings.control()}
-     </span>`;
-
+  
+  const wrapperId = `controlWrapper-${settings.id}`;
+  const control = `<span id="${wrapperId}">${settings.control()}</span>`;
   const controls = cypressAppSelect('.reporter header');
-
-  if (controls.find(`#controlWrapper-${settings.id}`).length === 0) {
-    // adding control
+  
+  if (controls.find(`#${wrapperId}`).length === 0) {
     controls.append(control);
   }
-
-  // todo style
+  
+  setStyle(wrapperId, settings.style(wrapperId));
 
   settings.addEventListener(
     (selector, event, handler) => {
-      cypressAppSelect(selector)
-        .get()[0]
-        .addEventListener(event, () => {
-          handler();
-        });
+      if( cypressAppSelect(selector)?.get()?.[0]){
+        cypressAppSelect(selector)
+          .get()[0]
+          .addEventListener(event, () => {
+            handler();
+          });
+      }
+      else {
+        console.warn('cypress-controls-extension: Could not set event listner');
+      }
     },
     () => cyStopClick(),
     () => cyRestartClick(),
   );
+  
 };
 
 export const setupControlsExtensionWithEvent = (
   controlSettings: SetupControlSettings[],
 ) => {
   Cypress.on('test:before:run:async', () => {
-    console.log('test:before:run:async');
 
     controlSettings.forEach((setting) => {
       injectControl(setting);
