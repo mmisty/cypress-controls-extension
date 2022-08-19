@@ -6,7 +6,6 @@
     "baseUrl": "./dist",
     "target": "es2015",
     "outDir": "./dist",
-    "rootDir": "./src",
     "module": "commonjs",
     "esModuleInterop": true,
     "skipLibCheck": true,

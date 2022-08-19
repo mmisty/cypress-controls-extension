@@ -1,8 +1,11 @@
 {
   "name": "cypress-cotrols-extension",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": "git@github.com:mmisty/cypress-cotrols-extension.git",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -13,7 +16,8 @@
     "tsc": "tsc",
     "cy:open": "$(npm bin)/cypress open",
     "cy:run": "$(npm bin)/cypress run",
-    "lint": "eslint --fix --ext .js,.ts ."
+    "lint": "eslint --fix --ext .js,.ts .",
+    "prepublish": "rm -rf dist && tsc"
   },
   "browser": {
 
