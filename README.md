@@ -4,8 +4,8 @@ Extension to embed controls to cypress app
 
 Can have event listeners and style style
 
-![alt preview](./docs/preview.jpg)
-![alt preview2](./docs/preview2.jpg)
+![alt preview](https://github.com/mmisty/cypress-controls-extension/blob/main/docs/preview.jpg)
+![alt preview2](https://github.com/mmisty/cypress-controls-extension/blob/main/docs/preview2.jpg)
 
 // under construction
 
