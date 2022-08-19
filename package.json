@@ -1,6 +1,6 @@
 {
   "name": "cypress-cotrols-extension",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
   "repository": "git@github.com:mmisty/cypress-cotrols-extension.git",
@@ -14,9 +14,6 @@
     "cy:open": "$(npm bin)/cypress open",
     "cy:run": "$(npm bin)/cypress run",
     "lint": "eslint --fix --ext .js,.ts ."
-  },
-  "peerDependencies": {
-    "cypress": "0.4.x"
   },
   "browser": {
 
