@@ -12,6 +12,6 @@
     "skipLibCheck": true,
     "types": ["cypress"]
   },
-  "include": ["src"],
+  "include": ["src", "docs", "README.md", "example-controls"],
   "exclude": ["cypress"]
 }

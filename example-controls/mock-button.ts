@@ -1,7 +1,6 @@
 import {
-  SetupControlSettings, setupControlsExtensionWithEvent,
-} from '../../src';
-console.log('LOADING');
+  SetupControlSettings,
+} from '../src';
 
 const ITEM_NAME = 'MOCK';
 const defaultValue = true;
@@ -46,7 +45,7 @@ export const mockButton: SetupControlSettings = {
    <input id="turnMockOn" type="checkbox" ${val ? 'checked' : ''}/>
 `
   },
-
+  
   addEventListener: (
     listener: (selector: string, event: string, handler: () => void) => void,
     cyStop,
@@ -61,61 +60,9 @@ export const mockButton: SetupControlSettings = {
       
       
       setMock(ITEM_NAME, JSON.stringify(newValue));
-  
+      
       console.log('Restarting...')
       cyRestart();
     });
   },
 };
-
-export const mockButton2: SetupControlSettings = {
-  id: 'myButton2',
-  
-  mode: { run: true, open: true },
-  
-  style: (parentId) => {
-    return  `
-    #${parentId} {
-        background-color: ${getStoredVar('OTHER') ? '#d1dfff' : '#0e44fc'};
-        color: #000;
-        font-weight: bold;
-      }
-      #turnMockOnLabel2 {
-        padding:5px;
-        color: ${getStoredVar('OTHER') ? '#0e44fc' : '#d1dfff'};
-      }
-    ` ;
-  },
-  
-  control: () => {
-    const val = getStoredVar('OTHER');
-    
-    return `
-   <span id="turnMockOnLabel2">Setting:</span>
-   <input id="turnMockOn2" type="checkbox" ${val ? 'checked' : ''}/>
-`
-  },
-
-  addEventListener: (
-    listener: (selector: string, event: string, handler: () => void) => void,
-    cyStop,
-    cyRestart,
-  ) => {
-    Cypress.env('OTHER', getStoredVar('OTHER'));
-    
-    listener('#turnMockOn2', 'click', () => {
-      
-      const current = getStoredVar('OTHER') ;
-      const  newValue = current != null ? !current : defaultValue;
-      
-      
-      setMock('OTHER',JSON.stringify(newValue));
-  
-      console.log('Restarting...')
-      cyRestart();
-    });
-  },
-};
-
-
-setupControlsExtensionWithEvent([mockButton, mockButton2]);

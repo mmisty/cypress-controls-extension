@@ -46,12 +46,7 @@ const setStyle = (wrapperId:string, styleDef:string) => {
         </style>`);
   }
   
-  const wrapperStyleCss = `
-     #${wrapperId}  {
-        padding: 5px;
-        padding-top:5px;
-        ${styleDef}
-     }`
+  const wrapperStyleCss = styleDef;
   
   const style = cypressAppSelect('html head style');
   const html = style.html();
@@ -88,7 +83,7 @@ export const injectControl = (settings: SetupControlSettings) => {
   }
   
   const wrapperId = `controlWrapper-${settings.id}`;
-  const control = `<span id="${wrapperId}">${settings.control()}</span>`;
+  const control = `<span id="${wrapperId}" style="padding: 5px;padding-top:5px;">${settings.control()}</span>`;
   const controls = cypressAppSelect('.reporter header');
   
   if (controls.find(`#${wrapperId}`).length === 0) {

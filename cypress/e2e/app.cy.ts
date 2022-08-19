@@ -2,16 +2,16 @@
 describe('App', function () {
   it('test', function () {
     if(Cypress.env('MOCK')){
-      cy.log('MOCKed')
+      cy.log('MOCKED')
     }
     else{
       cy.log('server')
     }
     if(Cypress.env('OTHER')){
-      cy.log('OTHE')
+      cy.log('Setting ON')
     }
     else{
-      cy.log('non-nother')
+      cy.log('Setting OFF')
     }
   });
 

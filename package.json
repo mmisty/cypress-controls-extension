@@ -1,6 +1,6 @@
 {
   "name": "cypress-cotrols-extension",
-  "version": "0.1.0",
+  "version": "0.0.2",
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
   "repository": "git@github.com:mmisty/cypress-cotrols-extension.git",
