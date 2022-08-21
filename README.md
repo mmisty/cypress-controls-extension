@@ -1,8 +1,8 @@
 # cypress-controls-extension
 
-Extension to embed controls to cypress app
+Extension to embed controls to controls panel in cypress app
 
-Can have event listeners and style style
+Can have event listeners and custom style
 
 ![alt preview](https://github.com/mmisty/cypress-controls-extension/blob/main/docs/preview.jpg)
 ![alt preview2](https://github.com/mmisty/cypress-controls-extension/blob/main/docs/preview2.jpg)

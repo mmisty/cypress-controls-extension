@@ -28,7 +28,9 @@ export const injectControl = (settings: SetupControlSettings) => {
     controls.append(control);
   }
 
-  setStyle(wrapperId, settings.style(wrapperId));
+  if (settings.style) {
+    setStyle(wrapperId, settings.style(wrapperId));
+  }
 
   settings.addEventListener(
     (selector, event, handler) => {

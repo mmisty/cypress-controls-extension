@@ -19,8 +19,9 @@ export type SetupControlSettings = {
 
   /**
    * css for controls
+   * @param parentId wrapper html id for injected control
    */
-  style: (parentId: string) => string;
+  style?: (parentId: string) => string;
 
   /**
    * event listener
