@@ -8,19 +8,29 @@ const message = (msg: string) => `${appId}: ${msg}`;
 
 const cyStopClick = () => cypressAppSelect('.stop').trigger('click');
 const cyRestartClick = () => cypressAppSelect('.restart').trigger('click');
+const wrapperIdFromSettings = (id: string) => `controlWrapper-${id}`;
 
 export const injectControl = (settings: SetupControlSettings) => {
   const cypressInteractive = Cypress.config('isInteractive');
+  const isOpen =
+    settings.mode && settings.mode.open === undefined
+      ? false
+      : settings.mode?.open === undefined
+      ? true
+      : settings.mode.open;
 
-  if (
-    (!settings.mode.open && cypressInteractive) ||
-    (!settings.mode.run && !cypressInteractive)
-  ) {
+  const isRun =
+    settings.mode && settings.mode.run === undefined
+      ? false
+      : settings.mode?.run === undefined
+      ? true
+      : settings.mode.run;
+
+  if ((cypressInteractive && !isOpen) || (!cypressInteractive && !isRun)) {
     // do not add according to config modes
     return;
   }
-
-  const wrapperId = `controlWrapper-${settings.id}`;
+  const wrapperId = wrapperIdFromSettings(settings.id);
   const control = `<span id="${wrapperId}" class="control-wrapper">${settings.control()}</span>`;
   const controls = cypressAppSelect('.reporter header');
 
@@ -33,12 +43,13 @@ export const injectControl = (settings: SetupControlSettings) => {
   }
 
   settings.addEventListener(
+    wrapperId,
     (selector, event, handler) => {
       if (cypressAppSelect(selector)?.get()?.[0]) {
         cypressAppSelect(selector)
           .get()[0]
-          .addEventListener(event, () => {
-            handler();
+          .addEventListener(event, (target) => {
+            handler(target);
           });
       } else {
         console.warn(message('Could not set event listener'));
@@ -61,6 +72,15 @@ const injectControls = (controlSettings: SetupControlSettings[]) => {
     injectControl(setting);
   });
 };
+/**
+ * Remove controls
+ * @param controlSettings
+ */
+export const removeControls = (...controlSettings: SetupControlSettings[]) => {
+  controlSettings.forEach((setting) => {
+    cypressAppSelect('#' + wrapperIdFromSettings(setting.id)).remove();
+  });
+};
 
 /**
  * Injects controls and adds event listeners on action
@@ -68,7 +88,7 @@ const injectControls = (controlSettings: SetupControlSettings[]) => {
  * @param controlSettings array of injected controls
  */
 export const setupControlsExtensionWithEvent = (
-  controlSettings: SetupControlSettings[],
+  ...controlSettings: SetupControlSettings[]
 ) => {
   Cypress.on('test:before:run:async', () => {
     injectControls(controlSettings);
@@ -80,7 +100,7 @@ export const setupControlsExtensionWithEvent = (
  * @param controlSettings array of injected controls
  */
 export const setupControlsExtension = (
-  controlSettings: SetupControlSettings[],
+  ...controlSettings: SetupControlSettings[]
 ) => {
   injectControls(controlSettings);
 };

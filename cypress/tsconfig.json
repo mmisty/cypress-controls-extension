@@ -6,7 +6,12 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node", "cypress"]
+    "types": ["node", "cypress"],
+    "baseUrl": "./",
+    "paths": {
+      "cy-ext": ["../instrumented"],
+      "cy-ext/*": ["../instrumented/"]
+    }
   },
   "include": ["./"]
 }

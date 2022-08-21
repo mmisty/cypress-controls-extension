@@ -14,13 +14,19 @@
   "scripts": {
     "fmt": "pretty-quick",
     "tsc": "tsc",
+    "inst": "npx nyc instrument --compact=false src instrumented",
     "cy:open": "$(npm bin)/cypress open",
+    "cy:open:cov": "npm run inst && CYPRESS_COVERAGE=true npm run cy:open",
     "cy:run": "$(npm bin)/cypress run",
+    "cy:run:cov": "rm -rf .nyc_output && rm -rf coverage && npm run inst && CYPRESS_COVERAGE=true npm run cy:run",
     "lint": "eslint --fix --ext .js,.ts .",
+    "cov": "http-server ./coverage/lcov-report",
     "prepublish": "rm -rf dist && tsc"
   },
   "browser": {},
   "devDependencies": {
+    "@cypress/code-coverage": "^3.10.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/node": "^18.7.8",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
@@ -28,6 +34,7 @@
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "nyc": "^15.1.0",
     "prettier": "~2.0.5",
     "pretty-quick": "^3.0.0",
     "tslib": "^2.0.1",

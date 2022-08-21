@@ -2,3 +2,9 @@
 /node_modules
 .DS_Store
 /dist
+/instrumented
+/coverage
+/.nyc_output
+/cypress/videos
+/cypress/downloads
+/cypress/screenshots

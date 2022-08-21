@@ -1,10 +1,11 @@
 export type SetupControlSettings = {
   /**
    * Whether to add control for mode
+   * default: true for both
    */
-  mode: {
-    open: boolean;
-    run: boolean;
+  mode?: {
+    open?: boolean;
+    run?: boolean;
   };
 
   /**
@@ -27,7 +28,12 @@ export type SetupControlSettings = {
    * event listener
    */
   addEventListener: (
-    listener: (selector: string, event: string, handler: () => void) => void,
+    parentId: string,
+    listener: (
+      selector: string,
+      event: string,
+      handler: (target: Event) => void,
+    ) => void,
     cyStop: () => void,
     cyRestart: () => void,
   ) => void;
