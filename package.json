@@ -1,6 +1,6 @@
 {
   "name": "cypress-cotrols-extension",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "./dist/src/index",
   "types": "./dist/src/index.d.ts",
   "files": [
