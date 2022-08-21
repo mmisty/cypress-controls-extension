@@ -9,7 +9,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["cypress"]
+    "types": ["node","cypress"]
   },
   "include": ["src", "docs", "README.md", "example-controls"],
   "exclude": ["cypress"]
