@@ -1,12 +1,12 @@
 {
-  "name": "cypress-cotrols-extension",
-  "version": "0.0.11",
+  "name": "cypress-controls-ext",
+  "version": "0.0.1",
   "main": "./dist/src/index",
   "types": "./dist/src/index.d.ts",
   "files": [
     "dist"
   ],
-  "repository": "git@github.com:mmisty/cypress-cotrols-extension.git",
+  "repository": "git@github.com:mmisty/cypress-controls-extension.git",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
