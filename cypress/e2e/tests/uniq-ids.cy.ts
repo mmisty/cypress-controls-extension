@@ -26,7 +26,7 @@ describe('suite', () => {
   it('should throw error when non-uniq ids used', () => {
     const t = () => setupControlsExtension(but, but);
     expect(t).to.throws(
-      'cypress-cotrols-extension: Controls should have uniq ids: ["myButton","myButton"]',
+      'cypress-controls-ext: Controls should have uniq ids: ["myButton","myButton"]',
     );
   });
 });
