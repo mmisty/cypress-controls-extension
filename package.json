@@ -10,6 +10,15 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "keywords": [
+    "cypress",
+    "html",
+    "e2e",
+    "tests",
+    "inject",
+    "control",
+    "settings"
+  ],
   "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
   "scripts": {
     "fmt": "pretty-quick",
