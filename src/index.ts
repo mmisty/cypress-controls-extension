@@ -9,4 +9,9 @@ export {
   removeControls,
 } from './inject';
 
-export type { SetupControlSettings } from './control-settings';
+export type {
+  SetupControlSettings,
+  ModeSetting,
+  ListenerSetting,
+  FnVoid,
+} from './control-settings.types';

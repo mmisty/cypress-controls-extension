@@ -1,4 +1,4 @@
-import { SetupControlSettings } from './control-settings';
+import { SetupControlSettings } from './control-settings.types';
 import { cypressAppSelect } from './common';
 import { setStyle } from './style-handler';
 
@@ -6,8 +6,14 @@ import { setStyle } from './style-handler';
 const appId = require('../package.json').name;
 const message = (msg: string) => `${appId}: ${msg}`;
 
-const cyStopClick = () => cypressAppSelect('.stop').trigger('click');
-const cyRestartClick = () => cypressAppSelect('.restart').trigger('click');
+const cyStopClick: () => void = () => {
+  cypressAppSelect('.stop').trigger('click');
+};
+
+const cyRestartClick: () => void = () => {
+  cypressAppSelect('.restart').trigger('click');
+};
+
 const wrapperIdFromSettings = (id: string) => `controlWrapper-${id}`;
 
 export const injectControl = (settings: SetupControlSettings) => {
@@ -55,8 +61,8 @@ export const injectControl = (settings: SetupControlSettings) => {
         console.warn(message('Could not set event listener'));
       }
     },
-    () => cyStopClick(),
-    () => cyRestartClick(),
+    cyStopClick,
+    cyRestartClick,
   );
 };
 

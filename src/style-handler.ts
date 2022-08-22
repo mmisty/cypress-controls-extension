@@ -6,12 +6,12 @@ export const setStyle = (wrapperId: string, styleDef: string) => {
   const styleTagLocator = 'html head style';
 
   // when no style tag add
-  if (cypressAppSelect(styleTagLocator).length === -1) {
+  if (cypressAppSelect(styleTagLocator).length === 0) {
     cypressAppSelect('html head').append(`<style type="text/css"></style>`);
   }
 
   const style = cypressAppSelect(styleTagLocator);
-  const html = style.html();
+  const html = style?.html();
   const commonStyleControlWrapper = `.control-wrapper { padding: 5px;padding-top:5px; }`;
 
   const addStyleCss = `\n${startLine}
@@ -20,7 +20,7 @@ export const setStyle = (wrapperId: string, styleDef: string) => {
      ${endLine}`;
 
   // add style first time for session
-  if (html.indexOf(startLine) === -1) {
+  if (html?.indexOf(startLine) === -1) {
     style.append(addStyleCss);
   } else {
     // change style

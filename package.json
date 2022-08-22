@@ -1,6 +1,6 @@
 {
   "name": "cypress-cotrols-extension",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "./dist/src/index",
   "types": "./dist/src/index.d.ts",
   "files": [
@@ -24,13 +24,15 @@
     "fmt": "pretty-quick",
     "tsc": "tsc",
     "inst": "npx nyc instrument --compact=false src instrumented",
+    "cov:check": "npx nyc check-coverage",
     "cy:open": "$(npm bin)/cypress open",
     "cy:open:cov": "npm run inst && CYPRESS_COVERAGE=true npm run cy:open",
     "cy:run": "$(npm bin)/cypress run",
     "cy:run:cov": "rm -rf .nyc_output && rm -rf coverage && npm run inst && CYPRESS_COVERAGE=true npm run cy:run",
     "lint": "eslint --fix --ext .js,.ts .",
     "cov": "http-server ./coverage/lcov-report",
-    "prepublish": "rm -rf dist && tsc"
+    "pre": "rm -rf dist && tsc && npm run inst && npm run cy:run:cov && npm run cov:check",
+    "prepublishOnly": "npm run pre"
   },
   "browser": {},
   "devDependencies": {

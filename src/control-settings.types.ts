@@ -1,12 +1,22 @@
+export type ModeSetting = {
+  open?: boolean;
+  run?: boolean;
+};
+
+export type ListenerSetting = (
+  selector: string,
+  event: string,
+  handler: (target: Event) => void,
+) => void;
+
+export type FnVoid = () => void;
+
 export type SetupControlSettings = {
   /**
    * Whether to add control for mode
    * default: true for both
    */
-  mode?: {
-    open?: boolean;
-    run?: boolean;
-  };
+  mode?: ModeSetting;
 
   /**
    * Uniq ID to html element when several elements added
@@ -26,15 +36,13 @@ export type SetupControlSettings = {
 
   /**
    * event listener
+   * @example
+   *
    */
   addEventListener: (
     parentId: string,
-    listener: (
-      selector: string,
-      event: string,
-      handler: (target: Event) => void,
-    ) => void,
-    cyStop: () => void,
-    cyRestart: () => void,
+    listener: ListenerSetting,
+    cyStop: FnVoid,
+    cyRestart: FnVoid,
   ) => void;
 };

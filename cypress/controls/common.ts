@@ -10,7 +10,7 @@ export const getStoredVar = <T>(item: string, defaultValue: T) => {
     setStoredVar(item, envVar);
   }
 
-  return JSON.parse(window.sessionStorage.getItem(item) ?? '');
+  return JSON.parse(window.sessionStorage.getItem(item) || '{}');
 };
 
 export const updateEnvVar = <T>(item: string, defaultValue: T) =>
