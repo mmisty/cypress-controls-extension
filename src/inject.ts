@@ -3,7 +3,7 @@ import { cypressAppSelect } from './common';
 import { setStyle } from './style-handler';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const appId = require('../package.json').name;
+const appId = 'cypress-controls-ext';
 const message = (msg: string) => `${appId}: ${msg}`;
 
 const cyStopClick: () => void = () => {
