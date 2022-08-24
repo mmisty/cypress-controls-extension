@@ -1,5 +1,4 @@
-import { SetupControlSettings } from '../src';
-import { getStoredVar, setStoredVar } from '../cypress/controls/common';
+import { SetupControlSettings, getStoredVar, setStoredVar } from '../src';
 
 export const mockButton: () => SetupControlSettings = () => {
   const ITEM_NAME = 'MOCK';
