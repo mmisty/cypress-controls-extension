@@ -10,7 +10,8 @@ export const setStyle = (wrapperId: string, styleDef: string) => {
     cypressAppSelect('html head').append(`<style type="text/css"></style>`);
   }
 
-  const style = cypressAppSelect(styleTagLocator);
+  const style = cypressAppSelect(styleTagLocator).eq(0);
+
   const html = style?.html();
   const commonStyleControlWrapper = `.control-wrapper { padding: 5px;padding-top:5px; }`;
 
