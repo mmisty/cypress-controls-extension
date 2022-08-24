@@ -56,6 +56,10 @@ export const injectControl = (settings: SetupControlSettings) => {
           .get()[0]
           .addEventListener(event, (target) => {
             handler(target);
+
+            if (settings.style) {
+              setStyle(wrapperId, settings.style(wrapperId));
+            }
           });
       } else {
         console.warn(message('Could not set event listener'));

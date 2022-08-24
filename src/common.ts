@@ -26,3 +26,6 @@ export const getStoredVar = <T>(item: string, defaultValue: T): T => {
 
   return JSON.parse(window.sessionStorage.getItem(item) ?? '');
 };
+
+export const updateEnvVar = <T>(item: string, defaultValue: T) =>
+  Cypress.env(item, getStoredVar(item, defaultValue));

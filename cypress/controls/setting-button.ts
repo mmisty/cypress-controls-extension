@@ -1,5 +1,10 @@
-import { SetupControlSettings } from 'cy-ext';
-import { getStoredVar, setStoredVar } from './common';
+import {
+  SetupControlSettings,
+  getStoredVar,
+  setStoredVar,
+  ListenerSetting,
+  FnVoid,
+} from 'cy-ext';
 
 export const settingButton: () => SetupControlSettings = () => {
   const color1 = '#d1dfff';
@@ -10,7 +15,7 @@ export const settingButton: () => SetupControlSettings = () => {
   return {
     id: 'setting-btn',
     mode: { run: true, open: true },
-    style: (parentId) => `#${parentId} {
+    style: (parentId: string) => `#${parentId} {
         background-color: ${
           getStoredVar(varName, defaultValue) ? color1 : color2
         };
@@ -32,10 +37,10 @@ export const settingButton: () => SetupControlSettings = () => {
     },
 
     addEventListener: (
-      _parentId,
-      listener: (selector: string, event: string, handler: () => void) => void,
-      cyStop,
-      cyRestart,
+      _parentId: string,
+      listener: ListenerSetting,
+      cyStop: FnVoid,
+      cyRestart: FnVoid,
     ) => {
       Cypress.env(varName, getStoredVar(varName, defaultValue));
 

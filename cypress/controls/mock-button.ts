@@ -1,5 +1,11 @@
-import { SetupControlSettings } from 'cy-ext';
-import { getStoredVar, setStoredVar, updateEnvVar } from './common';
+import {
+  SetupControlSettings,
+  ListenerSetting,
+  getStoredVar,
+  setStoredVar,
+  updateEnvVar,
+  FnVoid,
+} from 'cy-ext';
 
 export const mockButton: (
   defaultValue: boolean,
@@ -9,7 +15,7 @@ export const mockButton: (
   return {
     mode: { run: true, open: true },
     id: 'myButton',
-    style: (parentId) => `
+    style: (parentId: string) => `
     #${parentId} {
       background-color: ${
         getStoredVar(ITEM_NAME, defaultValue) ? '#569532' : 'rgb(160,44,145)'
@@ -32,14 +38,10 @@ export const mockButton: (
     },
 
     addEventListener: (
-      _parentId,
-      listener: (
-        selector: string,
-        event: string,
-        handler: (target: Event) => void,
-      ) => void,
-      cyStop,
-      cyRestart,
+      _parentId: string,
+      listener: ListenerSetting,
+      cyStop: FnVoid,
+      cyRestart: FnVoid,
     ) => {
       updateEnvVar(ITEM_NAME, defaultValue);
 
