@@ -3,8 +3,9 @@ import {
   setupControlsExtensionWithEvent,
   ListenerSetting,
   FnVoid,
+  getStoredVar,
+  setStoredVar,
 } from 'cy-ext';
-import { getStoredVar, setStoredVar } from '../../controls/common';
 
 describe('restart', () => {
   setupControlsExtensionWithEvent({

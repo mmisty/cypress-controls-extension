@@ -4,8 +4,9 @@ import {
   setupControlsExtension,
   ListenerSetting,
   ModeSetting,
+  getStoredVar,
+  setStoredVar,
 } from 'cy-ext';
-import { getStoredVar, setStoredVar } from '../../controls/common';
 
 describe('check mode', () => {
   const clean = () => {

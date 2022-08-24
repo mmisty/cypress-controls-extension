@@ -1,7 +1,7 @@
 /**
  * for testing purposes
  */
-export { cypressAppSelect } from './common';
+export { cypressAppSelect, setStoredVar, getStoredVar } from './common';
 
 export {
   setupControlsExtension,

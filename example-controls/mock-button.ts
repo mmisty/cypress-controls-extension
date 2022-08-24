@@ -1,19 +1,5 @@
 import { SetupControlSettings } from '../src';
-
-const setStoredVar = (item: string, val: string) =>
-  window.sessionStorage.setItem(item, val);
-
-const getStoredVar = (item: string, defaultValue: boolean) => {
-  const storage = window.sessionStorage.getItem(item);
-
-  if (storage == null) {
-    const envVar =
-      Cypress.env(item) !== undefined ? Cypress.env(item) : defaultValue;
-    setStoredVar(item, envVar);
-  }
-
-  return JSON.parse(window.sessionStorage.getItem(item) ?? '');
-};
+import { getStoredVar, setStoredVar } from '../cypress/controls/common';
 
 export const mockButton: () => SetupControlSettings = () => {
   const ITEM_NAME = 'MOCK';

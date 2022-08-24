@@ -1,5 +1,10 @@
-import { ListenerSetting, setupControlsExtension, FnVoid } from 'cy-ext';
-import { getStoredVar, setStoredVar } from '../../controls/common';
+import {
+  ListenerSetting,
+  setupControlsExtension,
+  FnVoid,
+  getStoredVar,
+  setStoredVar,
+} from 'cy-ext';
 
 describe('suite', () => {
   const but = {

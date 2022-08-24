@@ -2,9 +2,9 @@ import {
   setupControlsExtension,
   removeControls,
   cypressAppSelect,
+  getStoredVar,
 } from 'cy-ext';
 import { mockButton } from '../controls/mock-button';
-import { getStoredVar } from '../controls/common';
 
 describe('test mock button', () => {
   const item = 'MOCK';
