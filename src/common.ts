@@ -14,18 +14,27 @@ export const setStoredVar = (item: string, value: string) =>
  * @param item
  * @param defaultValue when no such value in storage
  */
-export const getStoredVar = <T>(item: string, defaultValue: T): T => {
+export const getStoredVar = <T>(
+  item: string,
+  defaultValue?: T,
+): T | undefined => {
   const storage = window.sessionStorage.getItem(item);
+  const isString = typeof defaultValue === 'string';
 
   if (storage == null) {
     const envVar =
       Cypress.env(item) !== undefined ? Cypress.env(item) : defaultValue;
 
-    setStoredVar(item, typeof defaultValue ==='string' ? envVar : JSON.stringify(envVar));
+    if (envVar === undefined) {
+      return undefined;
+    }
+
+    setStoredVar(item, isString ? envVar : JSON.stringify(envVar));
   }
 
-  return typeof defaultValue ==='string' ?
-    window.sessionStorage.getItem(item) ?? '' :  JSON.parse(window.sessionStorage.getItem(item) ?? '');
+  const value = window.sessionStorage.getItem(item) as string;
+
+  return isString ? value : JSON.parse(value);
 };
 
 export const updateEnvVar = <T>(item: string, defaultValue: T) =>
