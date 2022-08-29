@@ -1,5 +1,5 @@
 export const cypressAppSelect = (selector: string) =>
-  cy.$$(selector, top?.document);
+  Cypress.$(selector, top?.document);
 
 /**
  * Sets session storage
@@ -21,10 +21,11 @@ export const getStoredVar = <T>(item: string, defaultValue: T): T => {
     const envVar =
       Cypress.env(item) !== undefined ? Cypress.env(item) : defaultValue;
 
-    setStoredVar(item, JSON.stringify(envVar));
+    setStoredVar(item, typeof defaultValue ==='string' ? envVar : JSON.stringify(envVar));
   }
 
-  return JSON.parse(window.sessionStorage.getItem(item) ?? '');
+  return typeof defaultValue ==='string' ?
+    window.sessionStorage.getItem(item) ?? '' :  JSON.parse(window.sessionStorage.getItem(item) ?? '');
 };
 
 export const updateEnvVar = <T>(item: string, defaultValue: T) =>
