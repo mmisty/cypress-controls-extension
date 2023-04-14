@@ -1,4 +1,4 @@
-# cypress-controls-extension
+# cypress-controls-ext
 
 Extension to embed controls to controls panel in cypress app
 
@@ -15,12 +15,12 @@ Can have event listeners and custom style
 1. install package
 
     ```
-    npm i --save-dev cypress-controls-extension
+    npm i --save-dev cypress-controls-ext
     ```
     or
     
     ```
-   yarn add -D cypress-controls-extension
+   yarn add -D cypress-controls-ext
    ```
 
 2. create control - object of type SetupControlSettings
