@@ -1,6 +1,6 @@
 {
   "name": "cypress-controls-ext",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "./dist/src/index",
   "types": "./dist/src/index.d.ts",
   "files": [
@@ -25,7 +25,8 @@
     "tsc": "tsc",
     "inst": "npx nyc instrument --compact=false src instrumented",
     "cov:check": "npx nyc check-coverage",
-    "cy:open": "$(npm bin)/cypress open",
+    "cy:open:simple": "$(npm bin)/cypress open",
+    "cy:open": "npm run inst && npm run cy:open",
     "cy:open:cov": "npm run inst && CYPRESS_COVERAGE=true npm run cy:open",
     "cy:run": "$(npm bin)/cypress run",
     "cy:run:cov": "rm -rf .nyc_output && rm -rf coverage && npm run inst && CYPRESS_COVERAGE=true npm run cy:run",
@@ -41,7 +42,7 @@
     "@types/node": "^18.7.8",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
-    "cypress": "^10.6.0",
+    "cypress": "^12.9.0",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
