@@ -43,7 +43,11 @@ export const injectControl = (settings: SetupControlSettings) => {
   );
 
   if (controls.find(`#${wrapperId}`).length === 0) {
-    controls.append(control);
+    if (settings.inject === 'start') {
+      controls.prepend(control);
+    } else {
+      controls.append(control);
+    }
   }
 
   if (settings.style) {
