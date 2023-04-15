@@ -24,6 +24,11 @@ export type SetupControlSettings = {
   id: string;
 
   /**
+   * Selector which will be injected
+   */
+  selectorToInject?: string;
+
+  /**
    * HTML for injected control
    */
   control: () => string;

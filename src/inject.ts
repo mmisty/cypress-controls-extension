@@ -38,7 +38,9 @@ export const injectControl = (settings: SetupControlSettings) => {
   }
   const wrapperId = wrapperIdFromSettings(settings.id);
   const control = `<span id="${wrapperId}" class="control-wrapper">${settings.control()}</span>`;
-  const controls = cypressAppSelect('.reporter header');
+  const controls = cypressAppSelect(
+    settings?.selectorToInject ?? '.reporter header',
+  );
 
   if (controls.find(`#${wrapperId}`).length === 0) {
     controls.append(control);
