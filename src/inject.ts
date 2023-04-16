@@ -43,18 +43,19 @@ export const injectControl = (settings: SetupControlSettings) => {
   );
 
   if (controls.find(`#${wrapperId}`).length === 0) {
-    if (settings.inject === 'start') {
-      controls.prepend(control);
-    }
-    if (settings.inject === 'insertAfter') {
-      controls.insertAfter(control);
-    }
-    if (settings.inject === 'insertBefore') {
-      controls.insertBefore(control);
-    }
-    if (settings.inject === 'end') {
-      controls.append(control);
-    }
+    const add = (inject: string) => {
+      if (inject === 'start') {
+        controls.prepend(control);
+      } else if (inject === 'insertAfter') {
+        controls.insertAfter(control);
+      } else if (inject === 'insertBefore') {
+        controls.insertBefore(control);
+      } else {
+        controls.append(control);
+      }
+    };
+
+    add(settings.inject ?? 'end');
   }
 
   if (settings.style) {

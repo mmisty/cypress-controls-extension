@@ -19,7 +19,7 @@ describe('check mode', () => {
     control: () => `<button id="myBut">My Label</button>`,
     addEventListener: (_parentId: string, listener: ListenerSetting) => {
       listener('#myBut', 'click', () => {
-        const myVar = getStoredVar('MY', 0) + 1;
+        const myVar = (getStoredVar('MY', 0) ?? 0) + 1;
         setStoredVar('MY', myVar.toString());
         Cypress.env('MY', myVar);
         Cypress.log({ name: 'Click #myBut' });
