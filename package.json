@@ -1,6 +1,6 @@
 {
   "name": "cypress-controls-ext",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "main": "./dist/src/index",
   "types": "./dist/src/index.d.ts",
   "files": [

@@ -42,7 +42,10 @@ export const injectControl = (settings: SetupControlSettings) => {
     settings?.selectorToInject ?? '.reporter header',
   );
 
-  if (controls.find(`#${wrapperId}`).length === 0) {
+  if (
+    controls.find(`#${wrapperId}`).length === 0 &&
+    Cypress.$('body').find(`#${wrapperId}`).length === 0
+  ) {
     const add = (inject: string) => {
       if (inject === 'start') {
         controls.prepend(control);
