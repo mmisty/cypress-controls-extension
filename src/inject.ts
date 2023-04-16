@@ -47,9 +47,9 @@ export const injectControl = (settings: SetupControlSettings) => {
       if (inject === 'start') {
         controls.prepend(control);
       } else if (inject === 'insertAfter') {
-        controls.insertAfter(control);
+        Cypress.$(control).insertAfter(controls);
       } else if (inject === 'insertBefore') {
-        controls.insertBefore(control);
+        Cypress.$(control).insertBefore(controls);
       } else {
         controls.append(control);
       }
