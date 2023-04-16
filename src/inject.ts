@@ -45,7 +45,14 @@ export const injectControl = (settings: SetupControlSettings) => {
   if (controls.find(`#${wrapperId}`).length === 0) {
     if (settings.inject === 'start') {
       controls.prepend(control);
-    } else {
+    }
+    if (settings.inject === 'insertAfter') {
+      controls.insertAfter(control);
+    }
+    if (settings.inject === 'insertBefore') {
+      controls.insertBefore(control);
+    }
+    if (settings.inject === 'end') {
       controls.append(control);
     }
   }

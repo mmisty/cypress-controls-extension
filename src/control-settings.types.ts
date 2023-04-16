@@ -29,9 +29,9 @@ export type SetupControlSettings = {
   selectorToInject?: string;
 
   /**
-   * Whether to inject at the begginging or at the end (will use prepend or append)
+   * Whether to inject at the begginging or at the end (will use prepend or append or insertAfter)
    */
-  inject?: 'start' | 'end';
+  inject?: 'start' | 'end' | 'insertAfter' | 'insertBefore';
 
   /**
    * HTML for injected control
