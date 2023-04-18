@@ -82,7 +82,9 @@ export const injectControl = (settings: SetupControlSettings) => {
           });
       } else {
         console.warn(
-          message('could not set event listener - no matching elements'),
+          message(
+            `could not set event listener - no matching elements for "${selectorID}"`,
+          ),
         );
       }
     },

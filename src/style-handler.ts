@@ -3,11 +3,13 @@ import { cypressAppSelect } from './common';
 export const setStyle = (wrapperId: string, styleDef: string) => {
   const startLine = `/* cypress controls extension ${wrapperId} */`;
   const endLine = `/* cypress controls extension end ${wrapperId} */`;
-  const styleTagLocator = 'html head style';
+  const styleTagLocator = `html head style[data-id="${wrapperId}"]`;
 
   // when no style tag add
   if (cypressAppSelect(styleTagLocator).length === 0) {
-    cypressAppSelect('html head').append(`<style type="text/css"></style>`);
+    cypressAppSelect('html head').append(
+      `<style type="text/css" data-id="${wrapperId}"></style>`,
+    );
   }
 
   // should be last as css is cascading tables
