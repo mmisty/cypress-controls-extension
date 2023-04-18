@@ -18,7 +18,7 @@ describe('suite', () => {
       cyRestart: FnVoid,
     ) => {
       listener('#turnMockOn', 'click', () => {
-        const counter = getStoredVar('COUNTER', 0) + 1;
+        const counter = (getStoredVar('COUNTER', 0) ?? 0) + 1;
         setStoredVar('COUNTER', `${counter}`);
         console.log('Restarting...');
 

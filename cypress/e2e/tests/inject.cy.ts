@@ -2,7 +2,6 @@ import {
   cypressAppSelect,
   getStoredVar,
   ListenerSetting,
-  ModeSetting,
   removeControls,
   setStoredVar,
   setupControlsExtension,

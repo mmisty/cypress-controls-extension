@@ -44,7 +44,7 @@ export const injectControl = (settings: SetupControlSettings) => {
 
   if (
     controls.find(`#${wrapperId}`).length === 0 &&
-    Cypress.$('body').find(`#${wrapperId}`).length === 0
+    cypressAppSelect('body').find(`#${wrapperId}`).length === 0
   ) {
     const add = (inject: string) => {
       if (inject === 'start') {
@@ -68,18 +68,22 @@ export const injectControl = (settings: SetupControlSettings) => {
   settings.addEventListener(
     wrapperId,
     (selector, event, handler) => {
-      if (cypressAppSelect(selector)?.get()?.[0]) {
+      if (cypressAppSelect(selector)?.get().length > 0) {
         cypressAppSelect(selector)
-          .get()[0]
-          .addEventListener(event, (target) => {
-            handler(target);
+          .get()
+          .forEach((item) => {
+            item.addEventListener(event, (target) => {
+              handler(target);
 
-            if (settings.style) {
-              setStyle(wrapperId, settings.style(wrapperId));
-            }
+              if (settings.style) {
+                setStyle(wrapperId, settings.style(wrapperId));
+              }
+            });
           });
       } else {
-        console.warn(message('Could not set event listener'));
+        console.warn(
+          message('could not set event listener - no matching elements'),
+        );
       }
     },
     cyStopClick,
