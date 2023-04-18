@@ -5,6 +5,7 @@ import {
   removeControls,
   setStoredVar,
   setupControlsExtension,
+  SetupControlSettings,
 } from 'cy-ext';
 
 describe('check inject', () => {
@@ -13,13 +14,14 @@ describe('check inject', () => {
     cy.window().then((w) => w.sessionStorage.clear());
   };
 
-  const control = (inject: string) => ({
+  const control = (inject: string): SetupControlSettings => ({
     id: 'labelId',
+    mode: { run: true, open: true },
     inject: inject,
     selectorToInject: 'header .stats',
     control: () => `<button id="myBut">My Label</button>`,
-    addEventListener: (_parentId: string, listener: ListenerSetting) => {
-      listener('#myBut', 'click', () => {
+    addEventListener: (parentId: string, listener: ListenerSetting) => {
+      listener(`#${parentId} #myBut`, 'click', () => {
         const myVar = (getStoredVar('MY', 0) ?? 0) + 1;
         setStoredVar('MY', myVar.toString());
         Cypress.env('MY', myVar);

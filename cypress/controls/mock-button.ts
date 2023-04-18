@@ -2,9 +2,9 @@ import {
   SetupControlSettings,
   ListenerSetting,
   getStoredVar,
-  setStoredVar,
   updateEnvVar,
   FnVoid,
+  cypressAppSelect,
 } from 'cy-ext';
 
 export const mockButton: (
@@ -17,41 +17,53 @@ export const mockButton: (
     id: 'myButton',
     style: (parentId: string) => `
     #${parentId} {
-      background-color: ${
-        getStoredVar(ITEM_NAME, defaultValue) ? '#569532' : 'rgb(160,44,145)'
-      };
+    
     }
   
-    #turnMockOnLabel {
+    #${parentId} .turn-mock-on-label {
         padding:5px;
-        color: ${getStoredVar(ITEM_NAME, defaultValue) ? '#fff' : '#fff'};
+        color: #fff;
         font-weight: bold;
-      }`,
+      }
+      
+    #${parentId}:has(.turn-mock-on[data-value=checked]){
+       color: red;
+       background-color:#569532;
+    }
+    
+    #${parentId}:has(.turn-mock-on[data-value=unchecked]){
+       color: red;
+       background-color:#c07bcb;
+    }
+    `,
 
     control: () => {
+      // this will run only for first time after app is loaded
       const val = getStoredVar(ITEM_NAME, defaultValue);
-
       return `
-   <span id="turnMockOnLabel">Mock:</span>
-   <input id="turnMockOn" type="checkbox" ${val ? 'checked' : ''}/>
-`;
+         <span class="turn-mock-on-label">Mock:</span>
+         <input class="turn-mock-on" type="checkbox"  data-value="${
+           val === true ? 'checked' : 'unchecked'
+         }" ${val === true ? 'checked' : ''}/>
+      `;
     },
 
     addEventListener: (
-      _parentId: string,
+      parentId: string,
       listener: ListenerSetting,
       cyStop: FnVoid,
       cyRestart: FnVoid,
     ) => {
       updateEnvVar(ITEM_NAME, defaultValue);
 
-      listener('#turnMockOn', 'click', () => {
-        Cypress.log({ name: 'CLICK', message: '#turnMockOn' });
-        const current = getStoredVar(ITEM_NAME, defaultValue);
-        const newValue = current != null ? !current : defaultValue;
-
-        setStoredVar(ITEM_NAME, JSON.stringify(newValue));
-        updateEnvVar(ITEM_NAME, defaultValue);
+      listener(`#${parentId} .turn-mock-on`, 'click', () => {
+        updateEnvVar(ITEM_NAME, !defaultValue);
+        const element = cypressAppSelect(`#${parentId} .turn-mock-on`);
+        const value = element.attr('data-value');
+        element.attr(
+          'data-value',
+          value === 'checked' ? 'unchecked' : 'checked',
+        );
 
         if (isRestart) {
           console.log('Restarting...');

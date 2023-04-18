@@ -16,6 +16,7 @@ describe('check inject', () => {
   const control = (id: string, color: string) => ({
     id,
     inject: 'insertBefore',
+    mode: { run: true, open: true },
     selectorToInject: 'header .stats',
     control: () => `<button class="myBut">My Label</button>`,
     style: (id: string) => `

@@ -25,18 +25,40 @@ describe('check mode', () => {
         Cypress.log({ name: 'Click #myBut' });
       });
     },
-    mode,
+    ...mode,
   });
 
   [
-    { mode: { open: true } },
-    { mode: { open: true, run: true } },
-    { mode: { open: true, run: false } },
-    { mode: undefined },
+    {
+      desc: 'only open',
+      mode: { open: true },
+      exp: Cypress.config('isInteractive'),
+    },
+    {
+      desc: 'only open',
+      mode: { open: false },
+      exp: false,
+    },
+    { desc: 'both true', mode: { open: true, run: true }, exp: true },
+    {
+      desc: 'only open, run false',
+      mode: { open: true, run: false },
+      exp: Cypress.config('isInteractive'),
+    },
+    {
+      desc: 'both false',
+      mode: { open: false, run: false },
+      exp: false,
+    },
+    {
+      desc: 'both undefined',
+      mode: undefined,
+      exp: Cypress.config('isInteractive'),
+    },
   ].forEach((m) => {
-    describe(JSON.stringify(m), () => {
+    describe(m.desc, () => {
       beforeEach(() => {
-        setupControlsExtension(control(undefined));
+        setupControlsExtension(control(m));
       });
 
       after(() => {
@@ -45,16 +67,26 @@ describe('check mode', () => {
       });
 
       it('open mode', () => {
-        cypressAppSelect('#myBut').trigger('click');
-        expect(Cypress.env('MY')).eq(1);
+        const button = cypressAppSelect('#myBut');
+        if (m.exp) {
+          expect(button.length).eq(1);
 
-        cypressAppSelect('#myBut').trigger('click');
-        expect(Cypress.env('MY')).eq(2);
+          button.trigger('click');
+          expect(Cypress.env('MY')).eq(1);
+
+          button.trigger('click');
+          expect(Cypress.env('MY')).eq(2);
+        } else {
+          expect(button.length, 'no button injected').eq(0);
+        }
       });
 
       it('open mode2', () => {
-        cypressAppSelect('#myBut').trigger('click');
-        expect(Cypress.env('MY')).eq(4);
+        const button = cypressAppSelect('#myBut');
+        if (m.exp) {
+          button.trigger('click');
+          expect(Cypress.env('MY')).eq(4);
+        }
       });
     });
   });

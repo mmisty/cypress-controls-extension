@@ -4,13 +4,14 @@ import {
   FnVoid,
   getStoredVar,
   setStoredVar,
+  cypressAppSelect,
 } from 'cy-ext';
 
 describe('suite', () => {
   const but = {
     id: 'myButton',
     control: () => `<button id="turnMockOn" >MyBut</button>`,
-
+    mode: { run: true, open: true },
     addEventListener: (
       _parentId: string,
       listener: ListenerSetting,
@@ -18,7 +19,7 @@ describe('suite', () => {
       cyRestart: FnVoid,
     ) => {
       listener('#myMyMyIncorrect', 'click', () => {
-        const counter = getStoredVar('COUNTER', 0) + 1;
+        const counter = (getStoredVar('COUNTER', 0) ?? 0) + 1;
         setStoredVar('COUNTER', `${counter}`);
         console.log('Restarting...');
 
@@ -30,6 +31,7 @@ describe('suite', () => {
 
   it('should show warning when not found element', () => {
     setupControlsExtension(but);
+    expect(cypressAppSelect('#turnMockOn').length).eq(1);
     // todo mock console
   });
 });

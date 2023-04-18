@@ -27,7 +27,7 @@ Can have event listeners and custom style
     
    ```typescript
    // simple example, you can put that into separate file
-   export const myControl = {
+   export const myControl: SetupControlSettings = {
       // uniq id to html element
       id: 'my-button',
    
@@ -41,8 +41,9 @@ Can have event listeners and custom style
       control: () => `<button id="myBut">Button</button>`,
 
       // event listener for control
+      // add correct selector (with parentId)
       addEventListener: (parentId: string, listener: ListenerSetting) => {
-        listener('#myBut', 'click', () => {
+        listener('#' + parentId + ' #myBut', 'click', () => {
           // will log message on #myBut click
           Cypress.log({ name: 'CLICK', message: '#myBut' });
         });
@@ -61,19 +62,20 @@ Can have event listeners and custom style
  - You can add several controls
  - You can add style handler
    ```typescript
-     {
+     ...
        mode: { run: true, open: true },
        id: 'myButton',
-       style: (parentId) => &grave;
+       style: (parentId: string) => &grave;
          #${parentId} {
-           background-color: ${getStoredVar('MOCK') ? '#569532' : 'rgb(160,44,145)'};
+           background-color: '#569532'};
          }
 
-         #turnMockOnLabel {
-           padding:5px;
-           color: ${getStoredVar('MOCK') ? '#fff' : '#fff'};
+         #${parentId} .turn-mock-on-label {
+           padding: 5px;
+           color: red;
            font-weight: bold;
-         }&grave;,
+         }
+       &grave;,
    ...
    ```
 
