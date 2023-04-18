@@ -16,6 +16,6 @@ describe('no style tag', () => {
 
     setupControlsExtension(mockButton(true));
 
-    expect(cypressAppSelect('html head style').length, 'Style tags').eq(2);
+    expect(cypressAppSelect('html head style').length, 'Style tags').eq(3);
   });
 });
