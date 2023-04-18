@@ -16,7 +16,7 @@ export const setStyle = (wrapperId: string, styleDef: string) => {
   );
 
   const html = style?.html();
-  const commonStyleControlWrapper = `.control-wrapper { padding: 5px;padding-top:5px; }`;
+  const commonStyleControlWrapper = ``;
 
   const addStyleCss = `\n${startLine}
      ${commonStyleControlWrapper}
