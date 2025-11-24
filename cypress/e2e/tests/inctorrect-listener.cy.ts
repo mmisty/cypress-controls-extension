@@ -30,7 +30,11 @@ describe('suite', () => {
   };
 
   it('should show warning when not found element', () => {
-    setupControlsExtension(but);
+    setupControlsExtension({
+      ...but,
+      inject: 'insertAfter',
+      selectorToInject: '.spec-file-name',
+    });
     expect(cypressAppSelect('#turnMockOn').length).eq(1);
     // todo mock console
   });

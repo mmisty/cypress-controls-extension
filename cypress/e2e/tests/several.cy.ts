@@ -2,7 +2,6 @@ import {
   cypressAppSelect,
   getStoredVar,
   ListenerSetting,
-  removeControls,
   setStoredVar,
   setupControlsExtension,
 } from 'cy-ext';
@@ -17,7 +16,7 @@ describe('check inject', () => {
     id,
     inject: 'insertBefore',
     mode: { run: true, open: true },
-    selectorToInject: 'header .stats',
+    selectorToInject: '[aria-label="Stats"]',
     control: () => `<button class="myBut">My Label</button>`,
     style: (id: string) => `
           #${id} {

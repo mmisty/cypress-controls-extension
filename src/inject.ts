@@ -90,11 +90,11 @@ export const injectControl = (
   const wrapperId = wrapperIdFromSettings(settings.id);
   const control = `<span id="${wrapperId}" class="control-wrapper">${settings.control()}</span>`;
   const controls = cypressAppSelect(
-    settings?.selectorToInject ?? '.reporter header',
+    settings?.selectorToInject ?? '[aria-label="Stats"]',
   );
 
   addControlWhenNotExist(
-    settings.inject ?? 'end',
+    settings.inject ?? 'insertAfter',
     wrapperId,
     controls,
     control,

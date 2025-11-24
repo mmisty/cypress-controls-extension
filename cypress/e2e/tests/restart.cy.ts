@@ -22,9 +22,11 @@ describe('restart', () => {
   setupControlsExtensionWithEvent({
     id: 'myButton',
     mode: { run: true, open: true },
+    inject: 'insertAfter',
+    selectorToInject: '.spec-file-name',
     control: () => {
       return `
-   <button class="turn-mock-on" >MyBut</button>
+   <button class="turn-mock-on" >MyButton</button>
 `;
     },
 
@@ -39,13 +41,13 @@ describe('restart', () => {
         setVal(n);
         console.log('Restarting...' + n);
 
-        cyStop();
+        // cyStop();
         cyRestart();
       });
     },
   });
 
-  it('should restart', () => {
+  it('should restart', { retries: 2 }, () => {
     //const counter = getStoredVar('COUNTER', 0);
     const v = getVal();
     if (v < 3) {

@@ -18,7 +18,7 @@ describe('check inject', () => {
     id: 'labelId',
     mode: { run: true, open: true },
     inject: inject,
-    selectorToInject: 'header .stats',
+    selectorToInject: '[aria-label="Stats"]',
     control: () => `<button id="myBut">My Label</button>`,
     addEventListener: (parentId: string, listener: ListenerSetting) => {
       listener(`#${parentId} #myBut`, 'click', () => {
