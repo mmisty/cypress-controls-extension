@@ -10,7 +10,7 @@ import {
 
 describe('check inject', () => {
   const clean = () => {
-    Cypress.env('MY', undefined);
+    Cypress.expose('MY', undefined);
     cy.window().then((w) => w.sessionStorage.clear());
   };
 
@@ -24,7 +24,7 @@ describe('check inject', () => {
       listener(`#${parentId} #myBut`, 'click', () => {
         const myVar = (getStoredVar('MY', 0) ?? 0) + 1;
         setStoredVar('MY', myVar.toString());
-        Cypress.env('MY', myVar);
+        Cypress.expose('MY', myVar);
         Cypress.log({ name: 'Click #myBut' });
       });
     },
@@ -43,10 +43,10 @@ describe('check inject', () => {
 
       it(opt + ' mode', () => {
         cypressAppSelect('#myBut').trigger('click');
-        expect(Cypress.env('MY')).eq(1);
+        expect(Cypress.expose('MY')).eq(1);
 
         cypressAppSelect('#myBut').trigger('click');
-        expect(Cypress.env('MY')).eq(2);
+        expect(Cypress.expose('MY')).eq(2);
       });
     });
   });

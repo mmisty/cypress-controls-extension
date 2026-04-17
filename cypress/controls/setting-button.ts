@@ -42,7 +42,7 @@ export const settingButton: () => SetupControlSettings = () => {
       cyStop: FnVoid,
       cyRestart: FnVoid,
     ) => {
-      Cypress.env(varName, getStoredVar(varName, defaultValue));
+      Cypress.expose(varName, getStoredVar(varName, defaultValue));
 
       listener('#setting-check', 'click', () => {
         const current = getStoredVar(varName, defaultValue);

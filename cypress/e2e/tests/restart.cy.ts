@@ -45,7 +45,10 @@ describe('restart', () => {
     },
   });
 
-  it('should restart', () => {
+  it('should restart', function () {
+    if (!Cypress.config('isInteractive')) {
+      this.skip();
+    }
     //const counter = getStoredVar('COUNTER', 0);
     const v = getVal();
     if (v < 3) {

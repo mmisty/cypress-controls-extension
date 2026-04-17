@@ -1,20 +1,32 @@
 import { defineConfig } from 'cypress';
 
+const COVERAGE = 'COVERAGE';
+
+const isCoverage = (config: Cypress.PluginConfigOptions) =>
+  process.env.CYPRESS_COVERAGE === 'true' ||
+  process.env[COVERAGE] === 'true' ||
+  config.expose[COVERAGE] === true;
+
 export default defineConfig({
+  allowCypressEnv: false,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    expose: {},
+    reporter: 'junit',
+    reporterOptions: {
+      mochaFile: './reports/cypress/[hash].xml',
+      toConsole: false,
+    },
+
     setupNodeEvents(on, config) {
-      if (config.env['COVERAGE'] === true) {
+      if (isCoverage(config)) {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         require('@cypress/code-coverage/task')(on, config);
+        config.expose[COVERAGE] = true;
       }
 
-      console.log('CYPRESS ENV:');
-      console.log(config.env);
+      console.log('CYPRESS Expose:');
+      console.log(config.expose);
 
-      // It's IMPORTANT to return the config object
-      // with any changed environment variables
       return config;
     },
 

@@ -22,8 +22,8 @@ export const getStoredVar = <T>(
   const isString = typeof defaultValue === 'string';
 
   if (storage == null) {
-    const envVar =
-      Cypress.env(item) !== undefined ? Cypress.env(item) : defaultValue;
+    const exposed = Cypress.expose(item as never);
+    const envVar = exposed !== undefined ? exposed : defaultValue;
 
     if (envVar === undefined) {
       return undefined;
@@ -34,8 +34,8 @@ export const getStoredVar = <T>(
 
   const value = window.sessionStorage.getItem(item) as string;
 
-  return isString ? value : JSON.parse(value);
+  return (isString ? value : JSON.parse(value)) as T;
 };
 
 export const updateEnvVar = <T>(item: string, defaultValue: T) =>
-  Cypress.env(item, getStoredVar(item, defaultValue));
+  Cypress.expose(item as never, getStoredVar(item, defaultValue) as never);

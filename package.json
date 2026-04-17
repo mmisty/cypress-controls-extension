@@ -23,34 +23,58 @@
   "scripts": {
     "fmt": "pretty-quick",
     "tsc": "tsc",
+    "build": "tsc",
     "inst": "npx nyc instrument --compact=false src instrumented",
     "cov:check": "npx nyc check-coverage",
-    "cy:open:simple": "$(npm bin)/cypress open",
+    "cov:report": "npx nyc report --reporter=lcov --reporter=clover --reporter=html -t .nyc_output --report-dir coverage",
+    "cy:open:simple": "cypress open",
     "cy:open": "npm run inst && npm run cy:open:simple",
     "cy:open:cov": "npm run inst && CYPRESS_COVERAGE=true npm run cy:open:simple",
-    "cy:run": "$(npm bin)/cypress run",
+    "cy:run": "npx cypress run",
     "cy:run:cov": "rm -rf .nyc_output && rm -rf coverage && npm run inst && CYPRESS_COVERAGE=true npm run cy:run",
     "lint": "eslint --fix --ext .js,.ts .",
     "cov": "http-server ./coverage/lcov-report",
-    "pre": "rm -rf dist && tsc && npm run inst && npm run cy:run:cov && npm run cov:check",
-    "prepublishOnly": "npm run pre"
+    "pre": "rm -rf dist && tsc && npm run inst && npm run cy:run:cov && npm run cov:report && npm run cov:check",
+    "pre": "rm -rf lib && tsc && npm run inst && npm run cy:run:cov && npm run cov:check",
+    "prepublishOnly": "npm run pre",
+    "try:pack": "npm run prepublishOnly && npm pack && npm run postpublish",
+    "pack": "npm run tsc && cp package.json ./lib/package.json && cp README.pack.md ./lib/README.md && sh .scripts/remove.sh && cd lib && npm version $ver --no-git-tag-version ",
+    "publishPack": "npm run pack && cd lib && npm publish --tag $TAG",
+    "publish:alpha": "export TAG=alpha && export ver=$(semver $(npm show . version --tag alpha || npm show . version) --increment -i prerelease  --preid 'alpha') && npm run publishPack && npm run postpublish",
+    "publish:alpha:init": "export TAG=alpha && export ver=$(semver $(npm show . version) --increment -i prerelease  --preid 'alpha') && npm run publishPack && npm run postpublish",
+    "publish:patch": "export TAG=latest && export ver=$(semver $(npm show . version) --increment -i patch) && npm run publishPack && npm run postpublish",
+    "publish:minor": "export TAG=latest && export ver=$(semver $(npm show . version) --increment -i minor) && npm run publishPack && npm run postpublish",
+    "publish:major": "export TAG=latest && export ver=$(semver $(npm show . version) --increment -i major) && npm run publishPack && npm run postpublish",
+    "publish:pack": "export TAG=latest && export ver=\"0.0.2-alpha-2\" && npm run publishPack && npm run postpublish",
+    "postpublish": "git tag v$ver"
   },
   "browser": {},
+  "peerDependencies": {
+    "cypress": ">=15.10.0"
+  },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.10.0",
+    "@cypress/code-coverage": "^4.0.3",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@types/node": "^18.7.8",
-    "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.33.1",
-    "cypress": "^12.9.0",
-    "eslint": "^8.22.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "nyc": "^15.1.0",
-    "prettier": "~2.0.5",
-    "pretty-quick": "^3.0.0",
-    "tslib": "^2.0.1",
-    "tsutils": "~3.17.0",
-    "typescript": "^4.7.4"
+    "@types/node": "^20.19.25",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "cypress": "^15.10.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "http-server": "^14.1.1",
+    "nyc": "^17.1.0",
+    "prettier": "^3.4.2",
+    "pretty-quick": "^4.0.0",
+    "tslib": "^2.8.1",
+    "tsutils": "^3.21.0",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "volta": {
+    "node": "20.17.0",
+    "npm": "10.8.2"
   }
 }

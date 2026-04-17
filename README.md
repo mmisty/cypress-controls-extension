@@ -8,8 +8,8 @@ Can have event listeners and custom style
 
 
 ## Setup
-**Prerequisites**: 
- - cypress installed in project
+**Prerequisites**:
+ - **Cypress >= 15.10** installed in your project (this package uses [`Cypress.expose()`](https://docs.cypress.io/app/references/migration-guide#Migrating-away-from-Cypressenv) for optional defaults and for syncing control state with `getStoredVar` / `updateEnvVar`; it does not use `Cypress.env()`.)
 
 **Steps**:
 1. install package

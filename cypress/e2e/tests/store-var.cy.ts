@@ -21,13 +21,13 @@ describe('store var', () => {
   });
 
   it('should test Cypress env', () => {
-    Cypress.env('MINE', 'FROM CYPRESS hello');
+    Cypress.expose('MINE', 'FROM CYPRESS hello');
     const myBar1 = getStoredVar('MINE', 'hello');
     expect(myBar1).to.eq('FROM CYPRESS hello');
   });
 
   it('should test string Cypress env undefined', () => {
-    Cypress.env('MINE', undefined);
+    Cypress.expose('MINE', undefined);
     const myBar1 = getStoredVar('MINE', 'hello');
     expect(myBar1).to.eq('hello');
   });
@@ -38,7 +38,7 @@ describe('store var', () => {
   });
 
   it('should test number default with env', () => {
-    Cypress.env('MINE_NUM', 2);
+    Cypress.expose('MINE_NUM', 2);
     const myBar = getStoredVar('MINE_NUM', 1);
     expect(myBar).to.eq(2);
   });
