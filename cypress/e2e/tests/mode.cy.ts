@@ -10,7 +10,7 @@ import {
 
 describe('check mode', () => {
   const clean = () => {
-    Cypress.env('MY', undefined);
+    Cypress.expose('MY', undefined);
     cy.window().then((w) => w.sessionStorage.clear());
   };
 
@@ -21,7 +21,7 @@ describe('check mode', () => {
       listener('#myBut', 'click', () => {
         const myVar = (getStoredVar('MY', 0) ?? 0) + 1;
         setStoredVar('MY', myVar.toString());
-        Cypress.env('MY', myVar);
+        Cypress.expose('MY', myVar);
         Cypress.log({ name: 'Click #myBut' });
       });
     },
@@ -72,10 +72,10 @@ describe('check mode', () => {
           expect(button.length).eq(1);
 
           button.trigger('click');
-          expect(Cypress.env('MY')).eq(1);
+          expect(Cypress.expose('MY')).eq(1);
 
           button.trigger('click');
-          expect(Cypress.env('MY')).eq(2);
+          expect(Cypress.expose('MY')).eq(2);
         } else {
           expect(button.length, 'no button injected').eq(0);
         }
@@ -85,7 +85,7 @@ describe('check mode', () => {
         const button = cypressAppSelect('#myBut');
         if (m.exp) {
           button.trigger('click');
-          expect(Cypress.env('MY')).eq(4);
+          expect(Cypress.expose('MY')).eq(4);
         }
       });
     });

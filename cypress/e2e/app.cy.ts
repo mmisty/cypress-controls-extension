@@ -12,7 +12,7 @@ describe('test mock button', () => {
   const el = () => cypressAppSelect('.turn-mock-on');
   const click = () => el().trigger('click');
   const clean = () => {
-    Cypress.env('MOCK', undefined);
+    Cypress.expose('MOCK', undefined);
     cy.window().then((w) => w.sessionStorage.clear());
     removeControls(mockButton(initial, false));
   };
@@ -27,20 +27,20 @@ describe('test mock button', () => {
     });
 
     it('should have initial value', () => {
-      expect(Cypress.env(item), 'Cypress env').eq(initial);
+      expect(Cypress.expose(item), 'Cypress expose').eq(initial);
     });
 
     it('should handle click event - toggle value', () => {
       click();
 
-      expect(el().attr('data-value'), 'Cypress env').eq('unchecked');
+      expect(el().attr('data-value'), 'Cypress expose').eq('unchecked');
     });
 
     it('should handle click event - toggle value 2 times', () => {
       click();
       click();
 
-      expect(el().attr('data-value'), 'Cypress env').eq('checked');
+      expect(el().attr('data-value'), 'Cypress expose').eq('checked');
     });
 
     it('should handle click event - toggle value three times', () => {
@@ -48,7 +48,7 @@ describe('test mock button', () => {
       click();
       click();
 
-      expect(el().attr('data-value'), 'Cypress env').eq('unchecked');
+      expect(el().attr('data-value'), 'Cypress expose').eq('unchecked');
     });
   });
 
@@ -64,13 +64,13 @@ describe('test mock button', () => {
     it('should handle click event - toggle value ', () => {
       click();
 
-      expect(el().attr('data-value'), 'Cypress env').eq('unchecked');
+      expect(el().attr('data-value'), 'Cypress expose').eq('unchecked');
     });
 
     it('should handle click event - toggle value second', () => {
       click();
 
-      expect(el().attr('data-value'), 'Cypress env').eq('checked');
+      expect(el().attr('data-value'), 'Cypress expose').eq('checked');
     });
   });
 });

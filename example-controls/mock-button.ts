@@ -33,7 +33,7 @@ export const mockButton: () => SetupControlSettings = () => {
       cyStop,
       cyRestart,
     ) => {
-      Cypress.env(ITEM_NAME, getStoredVar(ITEM_NAME, defaultValue));
+      Cypress.expose(ITEM_NAME, getStoredVar(ITEM_NAME, defaultValue));
 
       listener('#turnMockOn', 'click', () => {
         const current = getStoredVar(ITEM_NAME, defaultValue);

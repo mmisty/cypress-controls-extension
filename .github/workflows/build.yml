@@ -1,0 +1,70 @@
+name: NodeJS with Webpack
+permissions: write-all
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - uses: volta-cli/action@v4
+
+      - name: Install
+        run: npm ci
+
+      - name: Versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run tsc
+
+      - name: Cypress (with coverage)
+        run: npm run cy:run:cov
+
+      - name: NYC report
+        if: success() || failure()
+        run: npm run cov:report
+
+      - name: Coverage check
+        if: success() || failure()
+        run: npm run cov:check
+
+      - name: Archive code coverage results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: ./coverage/lcov-report/
+
+      - name: Monitor coverage
+        if: success() || failure()
+        uses: slavcodev/coverage-monitor-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          coverage_path: 'coverage/clover.xml'
+
+      - name: Publish Cypress JUnit report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: '**/reports/cypress/*.xml'
+          check_name: 'Cypress Test Report'
+          detailed_summary: true
