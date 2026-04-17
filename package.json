@@ -1,10 +1,10 @@
 {
   "name": "cypress-controls-ext",
   "version": "0.2.0",
-  "main": "./dist/src/index",
-  "types": "./dist/src/index.d.ts",
+  "main": "./lib/src/index",
+  "types": "./lib/src/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "repository": "git@github.com:mmisty/cypress-controls-extension.git",
   "publishConfig": {
@@ -34,8 +34,7 @@
     "cy:run:cov": "rm -rf .nyc_output && rm -rf coverage && npm run inst && CYPRESS_COVERAGE=true npm run cy:run",
     "lint": "eslint --fix --ext .js,.ts .",
     "cov": "http-server ./coverage/lcov-report",
-    "pre": "rm -rf dist && tsc && npm run inst && npm run cy:run:cov && npm run cov:report && npm run cov:check",
-    "pre": "rm -rf lib && tsc && npm run inst && npm run cy:run:cov && npm run cov:check",
+    "pre": "rm -rf lib && tsc && npm run inst && npm run cy:run:cov && npm run cov:report && npm run cov:check",
     "prepublishOnly": "npm run pre",
     "try:pack": "npm run prepublishOnly && npm pack && npm run postpublish",
     "pack": "npm run tsc && cp package.json ./lib/package.json && cp README.pack.md ./lib/README.md && sh .scripts/remove.sh && cd lib && npm version $ver --no-git-tag-version ",
