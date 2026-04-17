@@ -1,11 +1,7 @@
 {
   "name": "cypress-controls-ext",
   "version": "0.2.0",
-  "main": "./lib/src/index",
-  "types": "./lib/src/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "main": "index.js",
   "repository": "git@github.com:mmisty/cypress-controls-extension.git",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -22,8 +18,7 @@
   "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
   "scripts": {
     "fmt": "pretty-quick",
-    "tsc": "tsc",
-    "build": "tsc",
+    "build": "rm -rf lib && tsc --project tsconfig.build.json",
     "inst": "npx nyc instrument --compact=false src instrumented",
     "cov:check": "npx nyc check-coverage",
     "cov:report": "npx nyc report --reporter=lcov --reporter=clover --reporter=html -t .nyc_output --report-dir coverage",

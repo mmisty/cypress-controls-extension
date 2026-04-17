@@ -34,7 +34,7 @@ jobs:
         run: npm run lint
 
       - name: Typecheck
-        run: npm run tsc
+        run: npm run build
 
       - name: Cypress (with coverage)
         run: npm run cy:run:cov
