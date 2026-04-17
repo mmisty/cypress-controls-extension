@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./lib",
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["node", "cypress"]
+  },
+
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}
