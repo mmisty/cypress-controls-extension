@@ -34,7 +34,18 @@
     "lint": "eslint --fix --ext .js,.ts .",
     "cov": "http-server ./coverage/lcov-report",
     "pre": "rm -rf dist && tsc && npm run inst && npm run cy:run:cov && npm run cov:report && npm run cov:check",
-    "prepublishOnly": "npm run pre"
+    "pre": "rm -rf lib && tsc && npm run inst && npm run cy:run:cov && npm run cov:check",
+    "prepublishOnly": "npm run pre",
+    "try:pack": "npm run prepublishOnly && npm pack && npm run postpublish",
+    "pack": "npm run tsc && cp package.json ./lib/package.json && cp README.pack.md ./lib/README.md && sh .scripts/remove.sh && cd lib && npm version $ver --no-git-tag-version ",
+    "publishPack": "npm run pack && cd lib && npm publish --tag $TAG",
+    "publish:alpha": "export TAG=alpha && export ver=$(semver $(npm show . version --tag alpha || npm show . version) --increment -i prerelease  --preid 'alpha') && npm run publishPack && npm run postpublish",
+    "publish:alpha:init": "export TAG=alpha && export ver=$(semver $(npm show . version) --increment -i prerelease  --preid 'alpha') && npm run publishPack && npm run postpublish",
+    "publish:patch": "export TAG=latest && export ver=$(semver $(npm show . version) --increment -i patch) && npm run publishPack && npm run postpublish",
+    "publish:minor": "export TAG=latest && export ver=$(semver $(npm show . version) --increment -i minor) && npm run publishPack && npm run postpublish",
+    "publish:major": "export TAG=latest && export ver=$(semver $(npm show . version) --increment -i major) && npm run publishPack && npm run postpublish",
+    "publish:pack": "export TAG=latest && export ver=\"0.0.2-alpha-2\" && npm run publishPack && npm run postpublish",
+    "postpublish": "git tag v$ver"
   },
   "browser": {},
   "peerDependencies": {
