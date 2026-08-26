@@ -1,5 +1,24 @@
+/**
+ * Cypress 15.19+ mounts the command log in a same-origin `#reporter-frame`
+ * iframe so reporter layout is isolated from the AUT document. Query that
+ * document when present; otherwise fall back to the top document (15.10–15.18).
+ */
+const getCypressAppDocument = (): Document | undefined => {
+  const topDocument = top?.document;
+  const reporterFrame = topDocument?.getElementById('reporter-frame') as
+    | HTMLIFrameElement
+    | null
+    | undefined;
+
+  return (
+    reporterFrame?.contentDocument ??
+    reporterFrame?.contentWindow?.document ??
+    topDocument
+  );
+};
+
 export const cypressAppSelect = (selector: string) =>
-  Cypress.$(selector, top?.document);
+  Cypress.$(selector, getCypressAppDocument());
 
 /**
  * Sets session storage
